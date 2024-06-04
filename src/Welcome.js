@@ -150,14 +150,14 @@ function App() {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder='Enter your ID'
+                  placeholder='Enter your UserName'
                   onChange={(e) => setUserName(e.target.value)}
                 />
                 <label htmlFor="input2">Password</label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder='Enter your ID'
+                  placeholder='Enter your Password'
                   onChange={(e) => setUserPass(e.target.value)}
                 />
               </div>
