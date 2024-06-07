@@ -55,7 +55,11 @@ function App() {
   const handleSubmitNewUser = async(e) => {
     e.preventDefault();
     //alert(`Form 1 Submitted with data: ${formData1}`);
-    console.log(process.env.REACT_APP_BASE_URL);
+    if(userName===''){
+      alert('User name cannot be empty');
+    }
+    else{
+      console.log(process.env.REACT_APP_BASE_URL);
     axios.post(`${process.env.REACT_APP_BASE_URL}/newuser`,{userName,userPass})
         .then(res=>{
             if(res.status===200){
@@ -68,6 +72,8 @@ function App() {
                 alert('not unique');
             }
         });
+    }
+    
   };
 
   //Already USer
