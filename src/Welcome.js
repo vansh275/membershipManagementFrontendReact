@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 function App() {
   const [userName, setUserName] = useState('');
   const [userPass,setUserPass]=useState('');
+  const [signinName,setSignName] = useState('');
+  const [signinPass,setSignPass]=useState('');
   const [className,setClassName]=useState('btn btn-primary');
   const [passwordError, setPasswordError] = useState('');
   const navigate = useNavigate();
@@ -58,6 +60,8 @@ function App() {
         .then(res=>{
             if(res.status===200){
                 alert("Registerd Successfully \n Now login");
+                setUserName('');
+                setUserPass('');
             }
         }).catch(err=>{
             if(err.response.status===400){
@@ -70,7 +74,7 @@ function App() {
 
   const handleSubmitAlreadyUser = (e) => {
     e.preventDefault();
-    axios.post(`${process.env.REACT_APP_BASE_URL}/alreadyuser`,{userName,userPass})
+    axios.post(`${process.env.REACT_APP_BASE_URL}/alreadyuser`,{signinName,signinPass})
     .then(async res=>{
         if(res.status===200){
             //alert('ok');
@@ -94,7 +98,7 @@ function App() {
   };
 
   const CheckServer = async () => {
-    alert('It can take upto 1 min for (FREE USERS)');
+    // alert('It can take upto 1 min for (FREE USERS)');
     try {
       const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/check`);
       if (res.status === 200) {
@@ -108,12 +112,12 @@ function App() {
 
   return (
     <div>
-    <span >Step 1 -> </span><button className={className} onClick={CheckServer}>Start Server</button><span>  & Wait until it's Green</span>
+    <button className={className} onClick={CheckServer}>Check Server</button><span>   if Green means working</span>
     <div className="container vh-100 d-flex align-items-center">
       <div className="row w-100">
         <div className="col-5 d-flex justify-content-center align-items-center">
           <div className="form-container bg-secondary text-white p-3 rounded">
-          <h3>New User</h3>
+          <h3>Sign Up</h3>
             <form onSubmit={handleSubmitNewUser}>
               <div className="form-group">
                 <label htmlFor="input1">User Name</label>
@@ -121,6 +125,7 @@ function App() {
                   type="text"
                   className="form-control"
                   placeholder='Enter your username'
+                  value={userName}
                   onChange={(e) => setUserName(e.target.value)}
                 />
                 <label htmlFor="input1">Password</label>
@@ -128,6 +133,7 @@ function App() {
                   type="password"
                   className="form-control"
                   placeholder='Enter your password'
+                  value={userPass}
                   onChange={handlePasswordChange}
                 />
                 {passwordError && <p className="text-warning">{passwordError}</p>}
@@ -143,7 +149,7 @@ function App() {
 
         <div className="col-5 d-flex justify-content-center align-items-center">
           <div className="form-container bg-success text-white p-3 rounded">
-          <h3>Already User</h3>
+          <h3>Sign In</h3>
             <form onSubmit={handleSubmitAlreadyUser}>
               <div className="form-group">
                 <label htmlFor="input2">User Name</label>
@@ -151,14 +157,14 @@ function App() {
                   type="text"
                   className="form-control"
                   placeholder='Enter your UserName'
-                  onChange={(e) => setUserName(e.target.value)}
+                  onChange={(e) => setSignName(e.target.value)}
                 />
                 <label htmlFor="input2">Password</label>
                 <input
-                  type="text"
+                  type="password"
                   className="form-control"
                   placeholder='Enter your Password'
-                  onChange={(e) => setUserPass(e.target.value)}
+                  onChange={(e) => setSignPass(e.target.value)}
                 />
               </div>
               <button type="submit" className="btn btn-light mt-2">Submit</button>
